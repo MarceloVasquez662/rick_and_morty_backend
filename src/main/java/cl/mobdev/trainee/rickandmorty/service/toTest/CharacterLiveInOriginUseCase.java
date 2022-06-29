@@ -1,0 +1,37 @@
+package cl.mobdev.trainee.rickandmorty.service.toTest;
+
+import cl.mobdev.trainee.rickandmorty.exception.LocationException;
+import cl.mobdev.trainee.rickandmorty.model.Character;
+import org.springframework.stereotype.Service;
+
+
+public class CharacterLiveInOriginUseCase {
+
+    private String unknown = "unknown";
+
+
+    public boolean execute(Character character) {
+
+        String locationName = character.getLocation().getName();
+        String originName = character.getOrigin().getName();
+
+        if (locationName==null && originName==null || unknown.equals(locationName) && unknown.equals(originName)) {
+            throw new LocationException("Origin and location unknown");
+        } else {
+            if (originName==null || unknown.equals(character.getOrigin().getName())) {
+                throw new LocationException("Origin unknown");
+            } else {
+                if (locationName==null || unknown.equals(character.getLocation().getName())) {
+                    throw new LocationException("Location unknown");
+                } else {
+                    if (character.getOrigin().getName().equals(character.getLocation().getName())) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            }
+        }
+
+    }
+}
