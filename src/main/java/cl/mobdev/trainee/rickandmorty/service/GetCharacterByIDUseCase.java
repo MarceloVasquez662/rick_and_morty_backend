@@ -39,7 +39,6 @@ public class GetCharacterByIDUseCase implements IGetCharacterByIDUseCase {
             character.setOrigin(getOriginByURL.execute(character.getOrigin().getUrl()));
         }
 
-
         return character;
     }
 }

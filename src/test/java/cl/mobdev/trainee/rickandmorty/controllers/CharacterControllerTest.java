@@ -1,5 +1,6 @@
 package cl.mobdev.trainee.rickandmorty.controllers;
 
+import cl.mobdev.trainee.rickandmorty.exception.CharacterNotFoundException;
 import cl.mobdev.trainee.rickandmorty.model.Character;
 import cl.mobdev.trainee.rickandmorty.service.IGetCharacterByIDUseCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,16 +23,15 @@ class CharacterControllerTest {
 
     private CharacterController characterController;
 
-    private Character character =new Character();
-
     @BeforeEach
     void setUp(){
         characterController=new CharacterController(iGetCharacterByIDUseCase);
     }
 
     @Test
-    void should_return_status_200(){
+    void should_return_status_200_when_(){
         int statusExpected=200;
+
         //GIVEN
         Character character=new Character();
         character.setName("Rick");
@@ -43,5 +43,19 @@ class CharacterControllerTest {
 
         //THEN
         assertEquals(statusExpected,responseCharacter.getStatusCodeValue());
+    }
+
+    @Test
+    void should_throw_exception(){
+        String messageExpected="Character Not Found";
+
+        //GIVEN
+        Mockito.when(iGetCharacterByIDUseCase.execute(0)).thenThrow(new CharacterNotFoundException("Character Not Found"));
+
+        //WHEN
+        CharacterNotFoundException exception=assertThrows(CharacterNotFoundException.class, ()->characterController.getData(0));
+
+        //THEN
+        assertEquals(messageExpected,exception.getMessage());
     }
 }
