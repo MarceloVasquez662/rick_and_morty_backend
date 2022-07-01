@@ -74,7 +74,7 @@ public class CharacterLiveInOriginTest {
     }
 
     @Test
-    void should_return_exception_when_origin_is_unknown(){
+    void should_throw_exception_when_origin_is_unknown(){
         LocationException expectedException=new LocationException("");
         String expectedMessage="Origin unknown";
         //GIVEN
@@ -93,7 +93,7 @@ public class CharacterLiveInOriginTest {
     }
 
     @Test
-    void should_return_exception_when_location_is_unknown(){
+    void should_throw_exception_when_location_is_unknown(){
         LocationException expectedException=new LocationException("");
         String expectedMessage="Location unknown";
         //GIVEN
@@ -112,7 +112,7 @@ public class CharacterLiveInOriginTest {
     }
 
     @Test
-    void should_return_exception_when_location_and_origin_is_unknown(){
+    void should_throw_exception_when_location_and_origin_is_unknown(){
         LocationException expectedException=new LocationException("");
         String expectedMessage="Origin and location unknown";
         //GIVEN
@@ -126,6 +126,21 @@ public class CharacterLiveInOriginTest {
         character.setLocation(location);
         //WHEN
         LocationException thrown=assertThrows(expectedException.getClass(), ()-> characterLiveInOriginUseCase.execute(character));
+        //THEN
+        assertEquals(expectedMessage, thrown.getMessage());
+    }
+
+    @Test
+    void should_throw_exception_when_location_and_origin_is_null(){
+        LocationException expectedException=new LocationException("");
+        String expectedMessage="Origin and location unknown";
+
+        //GIVEN
+        character=new Character();
+        character.setName("Rick");
+
+        //WHEN
+        LocationException thrown=assertThrows(expectedException.getClass(), ()->characterLiveInOriginUseCase.execute(character));
         //THEN
         assertEquals(expectedMessage, thrown.getMessage());
     }

@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.0'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'jacoco'
 }
 
 group = 'cl.mobdev.trainee'
@@ -21,4 +22,24 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+def coverageExclusions = [
+		// Exclude generated code, domain objects and configuration from coverage reports
+		'**/*Application*'
+]
+test {
+	finalizedBy jacocoTestReport // report is always generated after tests run
+}
+jacocoTestReport {
+	reports {
+		xml.required = true
+	}
+	afterEvaluate {
+		def jtrFiles = files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: coverageExclusions)
+		})
+		classDirectories.setFrom(jtrFiles)
+	}
+	dependsOn test // tests are required to run before generating the report
 }

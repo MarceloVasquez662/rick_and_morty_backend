@@ -68,4 +68,19 @@ public class IsFemaleTest {
         //THEN
         assertEquals(expectedMessage, thrown.getMessage());
     }
+
+    @Test
+    void should_return_exception_when_character_gender_is_null(){
+
+        String expectedMessage="El character no es mujer";
+        //GIVEN
+        int id=1;
+        character=new Character();
+        Mockito.when(isFemaleInterface.getFemaleCharacter(id)).thenReturn(character);
+
+        //WHEN
+        GenderException thrown=assertThrows(GenderException.class, ()->isFemaleUseCase.execute(id));
+        //THEN
+        assertEquals(expectedMessage, thrown.getMessage());
+    }
 }

@@ -1,6 +1,6 @@
 package cl.mobdev.trainee.rickandmorty.controllers;
 
-import cl.mobdev.trainee.rickandmorty.exception.CharacterNotFoundException;
+import cl.mobdev.trainee.rickandmorty.controllers.exception.ExceptionController;
 import cl.mobdev.trainee.rickandmorty.model.Character;
 import cl.mobdev.trainee.rickandmorty.service.IGetCharacterByIDUseCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.ResponseEntity;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,14 +29,11 @@ class CharacterControllerTest {
     }
 
     @Test
-    void should_return_status_200_when_(){
+    void should_return_status_200_when_execute_successfully(){
         int statusExpected=200;
 
         //GIVEN
-        Character character=new Character();
-        character.setName("Rick");
-
-        Mockito.when(iGetCharacterByIDUseCase.execute(1)).thenReturn(character);
+        Mockito.when(iGetCharacterByIDUseCase.execute(1)).thenReturn(new Character());
 
         //WHEN
         ResponseEntity<Character> responseCharacter=characterController.getData(1);
@@ -46,16 +43,16 @@ class CharacterControllerTest {
     }
 
     @Test
-    void should_throw_exception(){
-        String messageExpected="Character Not Found";
+    void should_verify_api_call_is_execute(){
+        int numberOfInvocations=1;
 
         //GIVEN
-        Mockito.when(iGetCharacterByIDUseCase.execute(0)).thenThrow(new CharacterNotFoundException("Character Not Found"));
+        Mockito.when(iGetCharacterByIDUseCase.execute(1)).thenReturn(new Character());
 
         //WHEN
-        CharacterNotFoundException exception=assertThrows(CharacterNotFoundException.class, ()->characterController.getData(0));
+        iGetCharacterByIDUseCase.execute(1);
 
         //THEN
-        assertEquals(messageExpected,exception.getMessage());
+        verify(iGetCharacterByIDUseCase, atLeastOnce()).execute(1);
     }
 }

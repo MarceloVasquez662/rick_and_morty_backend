@@ -2,6 +2,7 @@ package cl.mobdev.trainee.rickandmorty.controllers;
 
 import cl.mobdev.trainee.rickandmorty.model.Character;
 import cl.mobdev.trainee.rickandmorty.service.IGetCharacterByIDUseCase;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +19,7 @@ public class CharacterController {
 
     @GetMapping(value="/{id}")
     public ResponseEntity<Character> getData(@PathVariable int id){
-        return ResponseEntity.ok(iGetCharacterByIDUseCase.execute(id));
+        return new ResponseEntity<>(iGetCharacterByIDUseCase.execute(id), HttpStatus.OK);
     }
 
 }

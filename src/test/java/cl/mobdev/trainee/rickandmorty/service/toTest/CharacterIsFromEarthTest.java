@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.internal.matchers.Or;
 
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
 
 public class CharacterIsFromEarthTest {
 
@@ -56,5 +58,35 @@ public class CharacterIsFromEarthTest {
 
         //THEN
         Assertions.assertEquals(expected, response);
+    }
+
+    @Test
+    void should_be_false_if_origin_is_null(){
+
+        //GIVEN
+        character=new Character();
+        character.setName("Rick");
+
+        //WHEN
+        boolean result= characterIsFromEarthUseCase.execute(character);
+
+        //THEN
+        assertFalse(result);
+    }
+
+    @Test
+    void should_be_false_if_origin_name_is_null(){
+
+        //GIVEN
+        character=new Character();
+        character.setName("Rick");
+        character.setOrigin(new Origin());
+
+
+        //WHEN
+        boolean result= characterIsFromEarthUseCase.execute(character);
+
+        //THEN
+        assertFalse(result);
     }
 }

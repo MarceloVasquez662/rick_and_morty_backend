@@ -25,11 +25,11 @@ public class ExceptionController {
     }
 
     @ExceptionHandler(CharacterNotFoundException.class)
-    public ResponseEntity<Response> characterNotFound(CharacterNotFoundException ex, WebRequest wr){
+    public ResponseEntity<Response> characterNotFound(CharacterNotFoundException ex){
         response=new Response();
         response.setCode(404);
         response.setData(ex.getMessage());
-        response.setRequest(wr.getDescription(false));
+        //response.setRequest(wr.getDescription(false));
         response.setStatus("Error");
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }

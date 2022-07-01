@@ -30,7 +30,7 @@ class GetCharacterByIDUseCaseTest {
     }
 
     @Test
-    void should_return_character_with_unknown_origin(){
+    void should_return_character_when_origin_null(){
         Character expectedCharacter=new Character();
         expectedCharacter.setName("Rick");
         expectedCharacter.setOrigin(new Origin());
@@ -52,7 +52,31 @@ class GetCharacterByIDUseCaseTest {
     }
 
     @Test
-    void should_return_character_with_origin(){
+    void should_return_character_when_origin_url_is_null(){
+        Character expectedCharacter=new Character();
+        expectedCharacter.setName("Rick");
+        expectedCharacter.setOrigin(new Origin());
+        expectedCharacter.getOrigin().setName("unknown");
+
+        //GIVEN
+        int id=1;
+        Character character=new Character();
+        character.setName("Rick");
+        character.setOrigin(new Origin());
+        character.getOrigin().setUrl("");
+
+        when(getCharacterByID.execute(id)).thenReturn(character);
+
+        //WHEN
+        Character resultCharacter=getCharacterByIDUseCase.execute(id);
+
+        //THEN
+        assertEquals(expectedCharacter.getName(), resultCharacter.getName());
+        assertEquals(expectedCharacter.getOrigin().getName(), resultCharacter.getOrigin().getName());
+    }
+
+    @Test
+    void should_return_character_complete(){
         Character expectedCharacter=new Character();
         expectedCharacter.setName("Rick");
         expectedCharacter.setOrigin(new Origin());

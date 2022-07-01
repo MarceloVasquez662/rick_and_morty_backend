@@ -12,16 +12,13 @@ public class CharacterLiveInOriginUseCase {
 
     public boolean execute(Character character) {
 
-        String locationName = character.getLocation().getName();
-        String originName = character.getOrigin().getName();
-
-        if (locationName==null && originName==null || unknown.equals(locationName) && unknown.equals(originName)) {
+        if (character.getLocation()==null && character.getOrigin()==null || unknown.equals(character.getLocation().getName()) && unknown.equals(character.getOrigin().getName())) {
             throw new LocationException("Origin and location unknown");
         } else {
-            if (originName==null || unknown.equals(character.getOrigin().getName())) {
+            if (character.getLocation().getName()==null || unknown.equals(character.getOrigin().getName())) {
                 throw new LocationException("Origin unknown");
             } else {
-                if (locationName==null || unknown.equals(character.getLocation().getName())) {
+                if (character.getLocation()==null || unknown.equals(character.getLocation().getName())) {
                     throw new LocationException("Location unknown");
                 } else {
                     if (character.getOrigin().getName().equals(character.getLocation().getName())) {

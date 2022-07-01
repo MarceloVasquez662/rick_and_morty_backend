@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 public class CharacterIsFromEarthUseCase {
     public boolean execute(Character character) {
 
-        if (null == character.getOrigin() || null == character.getOrigin().getName()) {
+        if (character.getOrigin()==null || character.getOrigin().getName()==null) {
             return false;
         } else {
 

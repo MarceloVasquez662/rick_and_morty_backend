@@ -29,11 +29,25 @@ public class MartianTranslateTest {
     }
 
     @Test
-    void should_return_empty_name_when_name_empty_or_null(){
+    void should_return_empty_name_when_name_is_null(){
         String expectedName="";
 
         //GIVEN
         String name=null;
+
+        //WHEN
+        String response=martianTranslate.execute(name);
+
+        //THEN
+        assertEquals(expectedName, response);
+    }
+
+    @Test
+    void should_return_empty_name_when_name_is_empty(){
+        String expectedName="";
+
+        //GIVEN
+        String name="    ";
 
         //WHEN
         String response=martianTranslate.execute(name);
