@@ -26,7 +26,6 @@ class GetCharacterByIDUseCaseTest {
 
     @BeforeEach
     void setUp(){
-        //Prueba Github
         getCharacterByIDUseCase=new GetCharacterByIDUseCase(getCharacterByID, getOriginByURLGateway);
     }
 
