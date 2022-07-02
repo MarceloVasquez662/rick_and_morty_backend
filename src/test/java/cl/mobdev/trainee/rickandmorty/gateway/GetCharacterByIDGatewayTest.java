@@ -28,7 +28,7 @@ class GetCharacterByIDGatewayTest {
     @Mock
     private RestTemplate restTemplate;
 
-    private String url="www.url.cl";
+    private String url="www.api.cl";
 
     @BeforeEach
     void setUp(){
