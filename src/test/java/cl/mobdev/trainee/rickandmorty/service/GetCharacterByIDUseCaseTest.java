@@ -123,7 +123,7 @@ class GetCharacterByIDUseCaseTest {
         Mockito.when(getOriginByURLGateway.execute(url)).thenReturn(origin);
 
         //WHEN
-        Character result= getCharacterByIDUseCase.execute(id);
+        getCharacterByIDUseCase.execute(id);
 
         //THEN
         verify(getOriginByURLGateway, Mockito.times(wantedInvocations)).execute(url);
@@ -141,7 +141,7 @@ class GetCharacterByIDUseCaseTest {
         Mockito.when(getCharacterByID.execute(id)).thenReturn(character);
 
         //WHEN
-        Character result= getCharacterByIDUseCase.execute(id);
+        getCharacterByIDUseCase.execute(id);
 
         //THEN
         verify(getOriginByURLGateway, never()).execute("");
