@@ -15,11 +15,10 @@ public class ExceptionController {
     private Response response;
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Response> runtimeError(RuntimeException ex, WebRequest wr){
+    public ResponseEntity<Response> runtimeError(RuntimeException ex){
         response=new Response();
         response.setCode(500);
         response.setData(ex.getMessage());
-        response.setRequest(wr.getDescription(false));
         response.setStatus("Error");
         return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -29,17 +28,15 @@ public class ExceptionController {
         response=new Response();
         response.setCode(404);
         response.setData(ex.getMessage());
-        //response.setRequest(wr.getDescription(false));
         response.setStatus("Error");
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(GatewayException.class)
-    public ResponseEntity<Response> gatewayError(GatewayException ex, WebRequest wr){
+    public ResponseEntity<Response> gatewayError(GatewayException ex){
         response=new Response();
         response.setCode(400);
         response.setData(ex.getMessage());
-        response.setRequest(wr.getDescription(false));
         response.setStatus("Error");
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
